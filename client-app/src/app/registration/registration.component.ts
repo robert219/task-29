@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { RegistrationField } from './models/registration-field';
 import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css'],
+  styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
   public formFields$: Observable<RegistrationField[]>;
@@ -19,7 +19,7 @@ export class RegistrationComponent {
       map(({ formFields }) => formFields)
     );
 
-    this.formFields$.subscribe((formFields) => {
+    this.formFields$.pipe(take(1)).subscribe((formFields) => {
       const formGroup = this.formBuilder.group({});
 
       formFields.forEach((formField) => {
@@ -33,6 +33,16 @@ export class RegistrationComponent {
 
       this.form = formGroup;
     });
+  }
+
+  public register() {
+    if (this.form?.valid) {
+      console.log(this.form.value);
+    }
+  }
+
+  public trackFormField(index: number, formField: RegistrationField) {
+    return formField.name;
   }
 
   private getFormFieldValidators(formField: RegistrationField): ValidatorFn[] {

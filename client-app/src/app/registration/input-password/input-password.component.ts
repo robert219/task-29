@@ -158,7 +158,6 @@ export class InputPasswordComponent
     this.onChange(this.passwordText);
     this.onTouch();
     this.stateChanges.next();
-    this.ngControl?.control?.updateValueAndValidity();
   }
 
   public writeValue(value: string): void {
@@ -175,7 +174,6 @@ export class InputPasswordComponent
 
   public togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
-    console.log();
   }
 
   ngOnDestroy() {

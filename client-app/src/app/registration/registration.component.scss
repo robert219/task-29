@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    margin-top: 200px;
+    width: 400px;
+
+    .display-block {
+      display: block;
+    }
+  }
+
+  .float-right {
+    float: right;
+  }
+}
