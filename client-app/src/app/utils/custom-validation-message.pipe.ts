@@ -15,12 +15,16 @@ export class CustomValidationMessagePipe implements PipeTransform {
     if (errors['required']) {
       errorMessage = 'The form field is required.';
     } else {
-      const customMessage = validations?.find(({ name }) => {
-        const property = validatorsMap.has(name)
-          ? (validatorsMap.get(name) as string)
-          : name;
+      const customMessage = validations?.find(({ name, value }) => {
+        const isPattern =
+          validatorsMap.has(name) &&
+          errors.hasOwnProperty(validatorsMap.get(name) as string);
 
-        return errors.hasOwnProperty(property);
+        if (isPattern) {
+          return errors['pattern'].requiredPattern === value;
+        }
+
+        return errors.hasOwnProperty(name);
       })?.message;
 
       if (customMessage) {

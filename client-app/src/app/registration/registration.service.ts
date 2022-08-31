@@ -95,7 +95,7 @@ export class RegistrationService {
           },
           {
             name: 'maxlength',
-            message: 'Must be less than 47 characters.',
+            message: 'Must be less than 11 characters.',
             value: 10,
           },
           {
@@ -113,7 +113,7 @@ export class RegistrationService {
         validations: [
           {
             name: 'maxlength',
-            message: 'Must be less than 15 characters.',
+            message: 'Must be less than 16 characters.',
             value: 15,
           },
           {

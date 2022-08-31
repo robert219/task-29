@@ -7,8 +7,12 @@ import { RegistrationResolver } from './registration.resolver';
 import { RegistrationService } from './registration.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UtilsModule } from '../utils/utils.module';
+import { InputPasswordComponent } from './input-password/input-password.component';
 
 @NgModule({
   imports: [
@@ -17,6 +21,10 @@ import { UtilsModule } from '../utils/utils.module';
     UtilsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {
@@ -28,7 +36,7 @@ import { UtilsModule } from '../utils/utils.module';
       },
     ]),
   ],
-  declarations: [RegistrationComponent],
+  declarations: [RegistrationComponent, InputPasswordComponent],
   providers: [RegistrationResolver, RegistrationService],
 })
 export class RegistrationModule {}
