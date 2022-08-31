@@ -1,1 +1,21 @@
-<p>registration works!</p>
+<form *ngIf="form" [formGroup]="form" #formGroup>
+  <ng-container *ngFor="let field of formFields$ | async">
+    <mat-form-field>
+      <mat-label>{{ field.label }}</mat-label>
+
+      <input
+        #inputField
+        matInput
+        [formControlName]="field.name"
+        [type]="field.type"
+        [placeholder]="field.label"
+      />
+    </mat-form-field>
+
+    <ng-container *ngIf="form.controls[field.name] as control">
+      <mat-error *ngIf="control.touched && control.errors as errors">
+        {{ errors | customValidationMessage: field.validations }}
+      </mat-error>
+    </ng-container>
+  </ng-container>
+</form>
