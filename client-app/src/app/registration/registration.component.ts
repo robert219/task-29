@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { map, Observable, take } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, map, Observable, of, take, tap } from 'rxjs';
 import { RegistrationField } from './models/registration-field';
 import { Validators } from '@angular/forms';
+import { RegistrationService } from './registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +15,12 @@ export class RegistrationComponent {
   public formFields$: Observable<RegistrationField[]>;
   public form?: FormGroup;
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private registrationService: RegistrationService
+  ) {
     this.formFields$ = this.route.data.pipe(
       map(({ formFields }) => formFields)
     );
@@ -25,7 +31,7 @@ export class RegistrationComponent {
       formFields.forEach((formField) => {
         formGroup.addControl(
           formField.name,
-          this.formBuilder.control('', {
+          this.formBuilder.control('dsda', {
             validators: this.getFormFieldValidators(formField),
           })
         );
@@ -37,7 +43,18 @@ export class RegistrationComponent {
 
   public register() {
     if (this.form?.valid) {
-      console.log(this.form.value);
+      this.form?.disable();
+
+      this.registrationService
+        .register(this.form?.value)
+        .pipe(
+          take(1),
+          catchError((error) => {
+            this.form?.enable();
+            throw error;
+          })
+        )
+        .subscribe(() => this.router.navigate(['welcome']));
     }
   }
 

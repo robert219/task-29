@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { RegistrationField } from './models/registration-field';
+import { RegistrationRequest } from './models/registration-request';
 
 @Injectable()
 export class RegistrationService {
@@ -139,5 +140,11 @@ export class RegistrationService {
         ],
       },
     ]);
+  }
+
+  public register(registrationRequest: RegistrationRequest) {
+    console.log(registrationRequest);
+
+    return of('success').pipe(delay(2000));
   }
 }

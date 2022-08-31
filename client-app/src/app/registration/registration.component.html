@@ -49,7 +49,7 @@
         mat-raised-button
         class="float-right"
         type="submit"
-        [disabled]="form.invalid"
+        [disabled]="form.invalid || form.disabled"
       >
         Submit
       </button>

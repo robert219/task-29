@@ -64,7 +64,7 @@ export class InputPasswordComponent
   onTouch: any = () => {};
   setDescribedByIds = () => {};
 
-  ngControl: NgControl | null = null;
+  ngControl!: NgControl;
 
   focused = false;
   touched = false;
@@ -114,6 +114,7 @@ export class InputPasswordComponent
     return this._disabled;
   }
   set disabled(value: boolean) {
+    console.log(value);
     this._disabled = value;
     this.stateChanges.next();
   }
