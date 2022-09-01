@@ -1,4 +1,11 @@
-import { Body, Controller, Get, HttpException, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { RegistrationRequest } from './models/registration-request';
 import { RegistrationService } from './registration.service';
 
@@ -7,8 +14,8 @@ export class RegistrationController {
   constructor(private readonly registrationService: RegistrationService) {}
 
   @Get('fields')
-  getRegistrationFields() {
-    return this.registrationService.getRegistrationFields();
+  getRegistrationFields(@Query() onlyRequired: boolean) {
+    return this.registrationService.getRegistrationFields(onlyRequired);
   }
 
   @Post()
