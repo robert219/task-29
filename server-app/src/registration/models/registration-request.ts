@@ -14,7 +14,7 @@ export class RegistrationRequest {
   last_name: string;
 
   @MaxLength(46)
-  @Matches(/^[a-z0-9]+@[a-z0-9]+\\.[a-z]{2,}$/)
+  @Matches(/^[a-z0-9]+@[a-z0-9]+\.[a-z]{2,}$/)
   email: string;
 
   @MinLength(4)

@@ -14,6 +14,6 @@ export class RegistrationService {
   }
 
   register(request: RegistrationRequest) {
-    return of(request).pipe(delay(2500));
+    return of(request.first_name).pipe(delay(2500));
   }
 }
