@@ -12,7 +12,10 @@ export class RegistrationService {
 
   public getFormFields(): Observable<RegistrationField[]> {
     return this.httpClient.get<RegistrationField[]>(
-      `${this.url}/registration/fields`
+      `${this.url}/registration/fields`,
+      {
+        // params: { onlyRequired: true },
+      }
     );
   }
 

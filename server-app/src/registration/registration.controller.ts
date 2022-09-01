@@ -14,7 +14,7 @@ export class RegistrationController {
   constructor(private readonly registrationService: RegistrationService) {}
 
   @Get('fields')
-  getRegistrationFields(@Query() onlyRequired: boolean) {
+  getRegistrationFields(@Query() { onlyRequired }) {
     return this.registrationService.getRegistrationFields(onlyRequired);
   }
 
