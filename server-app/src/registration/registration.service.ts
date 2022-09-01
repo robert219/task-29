@@ -1,10 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { delay, of } from 'rxjs';
-import { RegistrationRequest } from './models/registration-request';
+import { CreateRegistrationInput } from './dto/create-registration.input';
+import { RegistrationField } from './entities/registration-field';
+import { Registration } from './entities/registration.entity';
 
 @Injectable()
 export class RegistrationService {
-  getRegistrationFields() {
+  create({
+    first_name,
+    middle_name,
+    last_name,
+  }: CreateRegistrationInput): Registration {
+    return {
+      id: 123,
+      name: `${first_name} ${middle_name} ${last_name}`,
+    };
+  }
+
+  getRegistrationFields(): RegistrationField[] {
     return [
       {
         type: 'text',
@@ -20,7 +32,7 @@ export class RegistrationService {
           {
             name: 'maxlength',
             message: 'Must be less than 64 characters.',
-            value: 63,
+            value: '63',
           },
         ],
       },
@@ -38,7 +50,7 @@ export class RegistrationService {
           {
             name: 'maxlength',
             message: 'Must be less than 64 characters.',
-            value: 63,
+            value: '63',
           },
         ],
       },
@@ -56,7 +68,7 @@ export class RegistrationService {
           {
             name: 'maxlength',
             message: 'Must be less than 64 characters.',
-            value: 63,
+            value: '63',
           },
         ],
       },
@@ -74,7 +86,7 @@ export class RegistrationService {
           {
             name: 'maxlength',
             message: 'Must be less than 47 characters.',
-            value: 46,
+            value: '46',
           },
         ],
       },
@@ -92,12 +104,12 @@ export class RegistrationService {
           {
             name: 'maxlength',
             message: 'Must be less than 11 characters.',
-            value: 10,
+            value: '10',
           },
           {
             name: 'minlength',
             message: 'Must not be less than 4 characters.',
-            value: 4,
+            value: '4',
           },
         ],
       },
@@ -110,12 +122,12 @@ export class RegistrationService {
           {
             name: 'maxlength',
             message: 'Must be less than 16 characters.',
-            value: 15,
+            value: '15',
           },
           {
             name: 'minlength',
             message: 'Must not be less than 8 characters.',
-            value: 8,
+            value: '8',
           },
           {
             name: 'regex',
@@ -135,9 +147,5 @@ export class RegistrationService {
         ],
       },
     ];
-  }
-
-  register(request: RegistrationRequest) {
-    return of(request).pipe(delay(2500));
   }
 }

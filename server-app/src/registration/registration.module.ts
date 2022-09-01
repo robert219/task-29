@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { RegistrationController } from './registration.controller';
 import { RegistrationService } from './registration.service';
+import { RegistrationResolver } from './registration.resolver';
 
 @Module({
-  controllers: [RegistrationController],
-  providers: [RegistrationService],
+  providers: [RegistrationResolver, RegistrationService]
 })
 export class RegistrationModule {}
