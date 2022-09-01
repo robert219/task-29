@@ -145,6 +145,6 @@ export class RegistrationService {
   public register(registrationRequest: RegistrationRequest) {
     console.log(registrationRequest);
 
-    return of('success').pipe(delay(2000));
+    return of('success').pipe(delay(5000));
   }
 }

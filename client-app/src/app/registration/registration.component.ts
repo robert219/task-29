@@ -54,7 +54,10 @@ export class RegistrationComponent {
             throw error;
           })
         )
-        .subscribe(() => this.router.navigate(['welcome']));
+        .subscribe(() => {
+          sessionStorage.setItem('registered_user', this.form?.value.email);
+          this.router.navigate(['welcome']);
+        });
     }
   }
 

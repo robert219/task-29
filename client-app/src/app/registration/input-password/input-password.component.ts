@@ -9,17 +9,14 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Optional,
-  Self,
 } from '@angular/core';
 import {
-  AbstractControlDirective,
   ControlValueAccessor,
   NgControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-input-password',
@@ -114,7 +111,6 @@ export class InputPasswordComponent
     return this._disabled;
   }
   set disabled(value: boolean) {
-    console.log(value);
     this._disabled = value;
     this.stateChanges.next();
   }
