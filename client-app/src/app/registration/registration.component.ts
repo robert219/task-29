@@ -5,6 +5,7 @@ import { catchError, map, Observable, of, take, tap } from 'rxjs';
 import { RegistrationField } from './models/registration-field';
 import { Validators } from '@angular/forms';
 import { RegistrationService } from './registration.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-registration',
@@ -19,7 +20,8 @@ export class RegistrationComponent {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private registrationService: RegistrationService
+    private registrationService: RegistrationService,
+    private matSnackBar: MatSnackBar
   ) {
     this.formFields$ = this.route.data.pipe(
       map(({ formFields }) => formFields)
@@ -31,7 +33,7 @@ export class RegistrationComponent {
       formFields.forEach((formField) => {
         formGroup.addControl(
           formField.name,
-          this.formBuilder.control('dsda', {
+          this.formBuilder.control('', {
             validators: this.getFormFieldValidators(formField),
           })
         );
@@ -49,7 +51,13 @@ export class RegistrationComponent {
         .register(this.form?.value)
         .pipe(
           take(1),
-          catchError((error) => {
+          catchError(({ error }) => {
+            this.matSnackBar.open(error.message[0], '', {
+              politeness: 'assertive',
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            });
+
             this.form?.enable();
             throw error;
           })
@@ -75,6 +83,7 @@ export class RegistrationComponent {
     formField.validations?.map(({ name, value }) => {
       switch (name) {
         case 'regex':
+          console.log(value);
           validators.push(Validators.pattern(value as string));
           break;
         case 'maxlength':

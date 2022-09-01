@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UtilsModule } from '../utils/utils.module';
 import { InputPasswordComponent } from './input-password/input-password.component';
@@ -26,6 +27,7 @@ import { InputPasswordComponent } from './input-password/input-password.componen
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
     RouterModule.forChild([
       {
         path: '',
