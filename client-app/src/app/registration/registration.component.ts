@@ -6,6 +6,7 @@ import { RegistrationField } from './models/registration-field';
 import { Validators } from '@angular/forms';
 import { RegistrationService } from './registration.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -47,23 +48,16 @@ export class RegistrationComponent {
     if (this.form?.valid) {
       this.form?.disable();
 
+      const formValue = this.form?.value;
+
       this.registrationService
-        .register(this.form?.value)
+        .register(formValue)
         .pipe(
           take(1),
-          catchError(({ error }) => {
-            this.matSnackBar.open(error.message[0], '', {
-              politeness: 'assertive',
-              horizontalPosition: 'right',
-              verticalPosition: 'top',
-            });
-
-            this.form?.enable();
-            throw error;
-          })
+          catchError(({ error }) => this.handleRegisterError(error))
         )
         .subscribe(() => {
-          sessionStorage.setItem('registered_user', this.form?.value.email);
+          sessionStorage.setItem('registered_user', formValue.email);
           this.router.navigate(['welcome']);
         });
     }
@@ -83,7 +77,6 @@ export class RegistrationComponent {
     formField.validations?.map(({ name, value }) => {
       switch (name) {
         case 'regex':
-          console.log(value);
           validators.push(Validators.pattern(value as string));
           break;
         case 'maxlength':
@@ -98,5 +91,25 @@ export class RegistrationComponent {
     });
 
     return validators;
+  }
+
+  private handleRegisterError(err: HttpErrorResponse): never {
+    this.form?.enable();
+
+    let message = '';
+
+    if (err.error) {
+      message = err.error.message;
+    } else {
+      message = Array.isArray(err.message) ? err.message[0] : err.message;
+    }
+
+    this.matSnackBar.open(message, '', {
+      politeness: 'assertive',
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
+
+    throw err;
   }
 }

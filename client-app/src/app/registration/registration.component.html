@@ -34,6 +34,7 @@
             <mat-label>{{ field.label }}</mat-label>
 
             <app-input-password
+              [disabled]="control.disabled"
               [required]="field.required"
               [formControlName]="field.name"
             ></app-input-password>
